@@ -132,7 +132,8 @@ tfidf %>%
   labs(title="Palabras más representativas de tres clásicos",
               subtitle = "Medidos por el tf-idf",
        y = "tf-idf",
-       x = "Palabras")
+       x = "Palabras")+
+  theme_bw()
 
 
 ######## N-GRAMAS
@@ -167,7 +168,7 @@ bigramas.total <- bind_rows(bigramas_cronopios,
 bigramas.total %>% 
   arrange(-tf_idf) %>% 
   group_by(libro) %>% 
-  top_n(20) %>% 
+  top_n(15) %>% 
   ungroup() %>% 
   ggplot(aes(x=reorder( bigrama,tf_idf),
              y=tf_idf,
@@ -178,7 +179,8 @@ bigramas.total %>%
   labs(title="Palabras más representativas de tres clásicos",
        subtitle = "Medidos por el tf-idf",
        y = "tf-idf",
-       x = "Palabras")
+       x = "Palabras")+
+  theme_bw()
 
 
 grafo <-  bigramas.total %>%
@@ -202,4 +204,4 @@ ggraph(grafo, layout="sphere")+
                  arrow = a)+
   geom_node_point(color="lightblue", size=3)+
   geom_node_text(aes(label=name), vjust=1, hjust=1)+
-  theme_void()
+  theme_bw()
