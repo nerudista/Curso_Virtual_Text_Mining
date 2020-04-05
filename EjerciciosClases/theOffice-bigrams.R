@@ -52,9 +52,36 @@ top.office %>%
   labs(title="Palabras más representativas en The Office",
        subtitle = "Top 5 por temporada",
        y = "Repeticiones",
-       x = "Palabras")+
-  scale_fill_manual(values=as.vector(stepped3(20)))
-  #theme_solarized_2()
-  #theme_gdocs()
-  theme_wsj()
+       x = "Palabras",
+       caption = "Ejercicio de @nerudista para el Curso Virtual de Text Mining de @jmtoral")+
+  scale_fill_manual(values=as.vector(stepped(22)))+
+  theme_clean()+
+  #theme_solarized_2()+
+  theme(
+    strip.text.x = element_text(size = 12, 
+                                face="bold.italic"),
+    plot.title = element_text(size = 18),
+    plot.subtitle = element_text(size = 15),
+    axis.title.x = element_text(size = 14),
+    axis.title.y = element_text(size = 14),
+    plot.caption = element_text(face="italic")
+    
+  )
+
+################# TF-IDF
+
+tfidf.office <- freq.office  %>% 
+  bind_tf_idf(word,season,n) #este orden es muy importante. Debe respetarse
+
+
+################## N-GRAMS
+
+ngramas.office <- mydata %>% 
+  #filter(season,episode,text) %>% 
+  unnest_tokens(bigrama,text,token="ngrams", n=4) %>% 
+  select(season,bigrama) 
+
+
+bind_tf_idf(bigrama,libro,n)
+
   
